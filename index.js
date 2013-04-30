@@ -38,23 +38,8 @@ function processKeyMap(keymap,numLock,capsLock,scrollLock){
 
 exports.enable = function(){
     enabled = true;
+    process.nextTick(checkKeyMap);
 };
 exports.disable = function(){
     enabled = false;
 };
-
-process.nextTick(checkKeyMap);
-
-//tests
-/*
-exports.on("keydown",function(key,numLock,capsLock,scrollLock){
-    console.log("keydown",arguments);
-});
-exports.on("keyup",function(key,numLock,capsLock,scrollLock){
-    console.log("keyup",arguments);
-    if(key == 27){//esc
-      exports.disable();  
-    }
-});
-exports.enable();
-*/
