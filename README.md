@@ -3,7 +3,7 @@ node-kbstroke
 
 c++ addon for nodejs
 
-This detects keyboard strokes 
+This detects keyboard strokes and mouse movement
 
 (Windows Only,
 sorry linux,
