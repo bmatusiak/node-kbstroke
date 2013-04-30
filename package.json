@@ -1,0 +1,14 @@
+{
+  "name": "node-kbstroke",
+  "version": "0.0.1",
+  "main": "./index.js",
+  "author":"Bradley Matusiak",
+  "engines": {
+    "node": ">=0.8.10"
+  },
+  "scripts": {
+    "install": "node-gyp rebuild"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {}
+}
