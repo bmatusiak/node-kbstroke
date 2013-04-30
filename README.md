@@ -1,13 +1,15 @@
 node-kbstroke
 =============
 
+c++ addon for nodejs
+
 This detects keyboard strokes 
 
-(Windows Only)
-sorry linux,(untested on mac)
+(Windows Only,
+sorry linux,
+untested on mac)
 
-``` js
-
+```js
 var kbstroke = require("kbstroke");
 
 kbstroke.on("keydown",function(key,numLock,capsLock,scrollLock){
@@ -20,7 +22,6 @@ kbstroke.on("keyup",function(key,numLock,capsLock,scrollLock){
     }
 });
 kbstroke.enable();
-
 ```
 
 Copyright 2013 Bradley Matusiak
