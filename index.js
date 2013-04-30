@@ -8,6 +8,7 @@ exports = module.exports = new events.EventEmitter();
 
 var enabled = false;
 var currentKeyMap = [];
+var currentMousePos = [];
 
 bindings.KeyMap(function(err,keymap,numLock,capsLock,scrollLock){
     currentKeyMap = keymap;
@@ -34,6 +35,13 @@ function processKeyMap(keymap,numLock,capsLock,scrollLock,mousePos){
         
         currentKeyMap[i] = keymap[i];
     }
+    
+    if(mousePos[0] !== currentMousePos[0] || mousePos[1] !== currentMousePos[1]){
+        exports.emit("mousemove",{x:mousePos[0],y:mousePos[1]});
+    }
+    
+    currentMousePos[0] = mousePos[0];
+    currentMousePos[1] = mousePos[1];
 }
 
 exports.enable = function(){

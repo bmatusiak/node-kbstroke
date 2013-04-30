@@ -10,4 +10,7 @@ addon.on("keyup",function(key,numLock,capsLock,scrollLock){
       addon.disable();  
     }
 });
+addon.on("mousemove",function(pos){
+    console.log(pos)
+});
 addon.enable();
