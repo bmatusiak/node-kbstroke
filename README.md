@@ -21,7 +21,13 @@ kbstroke.on("keyup",function(key,numLock,capsLock,scrollLock){
       kbstroke.disable();  
     }
 });
+kbstroke.on("mousemove",function(pos){
+    console.log(pos)
+});
 kbstroke.enable();
 ```
+
+works with node webkit:
+https://github.com/rogerwang/node-webkit/wiki/Build-native-modules-with-nw-gyp
 
 Copyright 2013 Bradley Matusiak
