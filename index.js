@@ -15,21 +15,21 @@ bindings.KeyMap(function(err,keymap,numLock,capsLock,scrollLock){
 
 var checkKeyMap = function (app) {
     if(enabled){
-        bindings.KeyMap(function(err,keymap,numLock,capsLock,scrollLock){
-            processKeyMap(keymap,numLock,capsLock,scrollLock);
+        bindings.KeyMap(function(err,keymap,numLock,capsLock,scrollLock,mousePos){
+            processKeyMap(keymap,numLock,capsLock,scrollLock,mousePos);
         });
         process.nextTick(checkKeyMap);
     }
 };
 
-function processKeyMap(keymap,numLock,capsLock,scrollLock){
+function processKeyMap(keymap,numLock,capsLock,scrollLock,mousePos){
     for(var i = 0; i <= 256 ; i++){
         if(keymap[i] === 0 && currentKeyMap[i] === 1){
-            exports.emit("keyup",i,numLock,capsLock,scrollLock);
+            exports.emit("keyup",i,numLock,capsLock,scrollLock,mousePos);
         }
         
         if(keymap[i] === 1 && currentKeyMap[i] === 0){
-            exports.emit("keydown",i,numLock,capsLock,scrollLock);
+            exports.emit("keydown",i,numLock,capsLock,scrollLock,mousePos);
         }
         
         currentKeyMap[i] = keymap[i];

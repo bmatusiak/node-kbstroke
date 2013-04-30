@@ -25,7 +25,7 @@ void CBAfter(uv_work_t* req)
     
     delete req;
 
-    Handle<Value> argv[5];
+    Handle<Value> argv[6];
     
     Handle<Array> keyArray = v8::Array::New(256);
             
@@ -36,7 +36,8 @@ void CBAfter(uv_work_t* req)
         if (GetAsyncKeyState(i) & 0x8000)
         { 
             keyArray->Set(i, v8::Integer::New(1));
-        }else 
+        }
+        else 
             keyArray->Set(i, v8::Integer::New(0));
     }
     
@@ -48,9 +49,30 @@ void CBAfter(uv_work_t* req)
     
     argv[4] = Integer::New(GetKeyState(VK_SCROLL) & 0x0001);
     
+    POINT mousePos;
+    
+    Handle<Array> mouseCordsArray = v8::Array::New(2);
+    
+    if (GetCursorPos(&mousePos))
+    {
+        mouseCordsArray->Set(0, v8::Integer::New(mousePos.x));
+         
+        mouseCordsArray->Set(1, v8::Integer::New(mousePos.y));
+         
+        argv[5] = mouseCordsArray;
+    }
+    else
+    {
+        mouseCordsArray->Set(0, v8::Integer::New(-1));
+        
+        mouseCordsArray->Set(1, v8::Integer::New(-1));
+        
+        argv[5] = mouseCordsArray;
+    }
+    
     TryCatch try_catch;
 
-    request->callback->Call(Context::GetCurrent()->Global(), 5, argv);
+    request->callback->Call(Context::GetCurrent()->Global(), 6, argv);
 
     if (try_catch.HasCaught()) 
     {
