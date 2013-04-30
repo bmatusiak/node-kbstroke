@@ -1,7 +1,10 @@
 node-kbstroke
 =============
 
-This detects window keyboard strokes
+This detects keyboard strokes 
+
+(Windows Only)
+sorry linux,(untested on mac)
 
 ``` js
 
