@@ -46,7 +46,7 @@ exports.disable = function(){
 process.nextTick(checkKeyMap);
 
 //tests
-
+/*
 exports.on("keydown",function(key,numLock,capsLock,scrollLock){
     console.log("keydown",arguments);
 });
@@ -57,3 +57,4 @@ exports.on("keyup",function(key,numLock,capsLock,scrollLock){
     }
 });
 exports.enable();
+*/
