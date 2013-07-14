@@ -1,30 +1,18 @@
 // Copyright 2013 Bradley Matusiak
 
+#pragma comment (lib, "user32.lib") //Manually add this librar
+
 #include <v8.h>
 #include <node.h>
 
 using namespace node;
 using namespace v8;
 
-struct reqStruct
-{
-    ssize_t result;
-    Persistent<Function> callback;
-};
-
-void CBWorker(uv_work_t* req)
-{
-    reqStruct* request = (reqStruct*)req->data;
-}
-
-void CBAfter(uv_work_t* req)
-{   
+static Handle<Value> KeyMap(const Arguments& args) {
     HandleScope scope;
-
-    reqStruct* request = (reqStruct*)req->data;
     
-    delete req;
-
+    Local<Function> cb = Local<Function>::Cast(args[0]);
+    
     Handle<Value> argv[6];
     
     Handle<Array> keyArray = v8::Array::New(256);
@@ -70,48 +58,10 @@ void CBAfter(uv_work_t* req)
         argv[5] = mouseCordsArray;
     }
     
-    TryCatch try_catch;
-
-    request->callback->Call(Context::GetCurrent()->Global(), 6, argv);
-
-    if (try_catch.HasCaught()) 
-    {
-        FatalException(try_catch);
-    }
-
-    request->callback.Dispose();
-
-    delete request;
-}
-
-
-static Handle<Value> KeyMap(const Arguments& args)
-{
-
-    HandleScope scope;
-
-    if ( args[0]->IsFunction() )
-    {
-        Local<Function> callback = Local<Function>::Cast(args[0]);
-
-        reqStruct* request = new reqStruct;
-        
-        request->callback = Persistent<Function>::New(callback);
-
-        uv_work_t* req = new uv_work_t();
-        
-        req->data = request;
-
-        uv_queue_work(uv_default_loop(), req, CBWorker, CBAfter);
-    }
-    else
-    {
-        return ThrowException(Exception::TypeError(String::New("Callback missing")));
-    }
-
+    cb->Call(Context::GetCurrent()->Global(), 6, argv);
+    
     return Undefined();
 }
-
 void init(Handle<Object> target) {
   NODE_SET_METHOD(target, "KeyMap", KeyMap);
 }

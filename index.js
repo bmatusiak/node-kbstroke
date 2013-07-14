@@ -19,7 +19,7 @@ var checkKeyMap = function (app) {
         bindings.KeyMap(function(err,keymap,numLock,capsLock,scrollLock,mousePos){
             processKeyMap(keymap,numLock,capsLock,scrollLock,mousePos);
         });
-        process.nextTick(checkKeyMap);
+        setInterval(checkKeyMap,0);
     }
 };
 
@@ -46,7 +46,7 @@ function processKeyMap(keymap,numLock,capsLock,scrollLock,mousePos){
 
 exports.enable = function(){
     enabled = true;
-    process.nextTick(checkKeyMap);
+    setInterval(checkKeyMap,0);
 };
 exports.disable = function(){
     enabled = false;
